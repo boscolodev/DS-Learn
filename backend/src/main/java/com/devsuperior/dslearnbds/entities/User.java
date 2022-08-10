@@ -118,12 +118,9 @@ public class User implements UserDetails, Serializable {
 		return true;
 	}
 
-
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {		
-		return roles.stream()
-					.map(role -> new SimpleGrantedAuthority(role.getAuthority()))
-					.collect(Collectors.toList());
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
 	}
 
 	@Override
@@ -149,6 +146,15 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public boolean hasHole(String roleName) {
+		for (Role role : roles) {
+			if (role.getAuthority().equals(roleName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
